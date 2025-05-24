@@ -106,29 +106,45 @@ class admin extends Pengguna {
   @Override
   public Integer Menu() {
     System.out.println("Menu Admin");
-    System.out.println("1. Add User");
-    System.out.println("2. Delete User");
-    System.out.println("3. View Users");
-    System.out.println("4. Exit");
+    System.out.println("1. Lihat  Semua User");
+    System.out.println("2. Daftar Pengajuan Pinjaman");
+    System.out.println("3. Setujui/Tolak Pengajuan Pinjaman");
+    System.out.println("4. Status Pembayaran Pinjaman");
+    System.out.println("5. Riwayat Pinjaman");
+    System.out.println("6. Exit");
     Scanner input = new Scanner(System.in);
     super.menu = input.nextLine();
     switch (super.menu) {
       case "1":
-        System.out.println("Add User");
+        System.out.println("Lihat Semua User");
+        // tampilkanSemuaUser(); // Menampilkan semua user
         break;
       case "2":
-        System.out.println("Delete User");
+        System.out.println("Daftar Pengajuan Pinjaman");
         break;
       case "3":
-        System.out.println("View Users");
+        System.out.println("Setujui/Tolak Pengajuan Pinjaman");
         break;
       case "4":
+        System.out.println("Status Pembayaran Pinjaman");
+        break;
+      case "5":
+        System.out.println("Riwayat Pinjaman");
+        break;
+      case "6":
         System.out.println("Exit");
         return 1;
       default:
         System.out.println("Inputan tidak valid");
     }
     return 0;
+  }
+
+  void tampilkanSemuaUser() {
+    System.out.println("Daftar Semua User:");
+    for (int i = 0; i < usernames.size(); i++) {
+      System.out.println("ID: " + ids.get(i) + ", Username: " + usernames.get(i) + ", Role: " + roles.get(i));
+    }
   }
 }
 
@@ -186,7 +202,7 @@ class user extends Pengguna {
 
       case "4":
         System.out.println("Logout berhasil.");
-        return 0;
+        return 1;
       default:
         System.out.println("Pilihan tidak valid.");
 

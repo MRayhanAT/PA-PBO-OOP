@@ -483,7 +483,7 @@ class User extends Pengguna {
       bungaPinjaman = 30.0;
     }
 
-    String statusPinjaman = "Menunggu";
+    String statusPinjaman = "Pending";
     String namaPeminjam = usernames.get(penggunaSekarang - 1);
 
     pinjaman.add(new Pinjaman(jumlahPinjaman, jangkaWaktuPinjaman, bungaPinjaman, statusPinjaman, namaPeminjam));
@@ -493,17 +493,16 @@ class User extends Pengguna {
 
   private void lihatStatusPending() {
     System.out.println("Status Pengajuan Pinjaman");
-    boolean adaPengajuanPending = false;
     for (Pinjaman pinjamanItem : pinjaman) {
-      if (pinjamanItem.getStatuspinjaman().equals("Menunggu")) {
-        adaPengajuanPending = true;
+      if (pinjamanItem.getStatuspinjaman().equals("Pending")) {
         System.out.println("Jumlah Pinjaman: " + pinjamanItem.getJumlahPinjaman());
         System.out.println("Jangka Waktu Pinjaman: " + pinjamanItem.getJangkaWaktuPinjaman() + " bulan");
         System.out.println("Bunga Pinjaman: " + pinjamanItem.getBungaPinjaman() + "%");
         System.out.println("Status Pinjaman: " + pinjamanItem.getStatuspinjaman());
-
+        return;
       }
     }
+    System.out.println("Belum ada pengajuan pinjaman");
   }
 
   // private void lihatStatus() {
@@ -534,61 +533,65 @@ class User extends Pengguna {
       return;
     }
     lihatStatusPending();
-    System.out.print("Nomor Pengajuan: ");
-    int nomorPengajuan = input.nextInt();
-    input.nextLine(); // Clear buffer
-    int jumlahPinjaman = 0;
-    int jangkaWaktuPinjaman = 0;
-    double bungaPinjaman = 0.0;
-    if (nomorPengajuan > 0 && nomorPengajuan <= pinjaman.size()) {
-      if (pinjaman.get(nomorPengajuan - 1).getStatuspinjaman().equals("Disetujui")) {
-        System.out.println("Pengajuan sudah disetujui, tidak bisa diubah.");
-        return;
-      } else if (pinjaman.get(nomorPengajuan - 1).getStatuspinjaman().equals("Ditolak")) {
-        System.out.println("Pengajuan sudah ditolak, tidak bisa diubah.");
-        return;
-      } else if (pinjaman.get(nomorPengajuan - 1).getStatuspinjaman().equals("Menunggu")) {
-        System.out.print("Jumlah Pinjaman: ");
-        jumlahPinjaman = input.nextInt();
-        input.nextLine(); // Clear buffer
-        System.out.println(
-            "\n1. 3 bulan, Bunga 10%\n2. 6 bulan, Bunga 15%\n3. 12 bulan, Bunga 20%\n4. 24 bulan, Bunga 25%\n5. 36 bulan, Bunga 30%\n");
-        System.out.print("Pilih Jangka Waktu Pinjaman (1-5): ");
-        int pilihanJangkaWaktu = input.nextInt();
-        input.nextLine(); // Clear buffer
+    System.out.println("");
+    for (Pinjaman pinjamanItem : pinjaman) {
+      if (pinjamanItem.getStatuspinjaman().equals("Pending")
+          && pinjamanItem.getNamaPeminjam().equals(usernames.get(penggunaSekarang - 1))) {
+        int nomorPengajuan = pinjaman.indexOf(pinjamanItem) + 1;
+        int jumlahPinjaman = 0;
+        int jangkaWaktuPinjaman = 0;
+        double bungaPinjaman = 0.0;
+        if (nomorPengajuan > 0 && nomorPengajuan <= pinjaman.size()) {
+          if (pinjaman.get(nomorPengajuan - 1).getStatuspinjaman().equals("Disetujui")) {
+            System.out.println("Pengajuan sudah disetujui, tidak bisa diubah.");
+            return;
+          } else if (pinjaman.get(nomorPengajuan - 1).getStatuspinjaman().equals("Ditolak")) {
+            System.out.println("Pengajuan sudah ditolak, tidak bisa diubah.");
+            return;
+          } else if (pinjaman.get(nomorPengajuan - 1).getStatuspinjaman().equals("Pending")) {
+            System.out.print("Jumlah Pinjaman: ");
+            jumlahPinjaman = input.nextInt();
+            input.nextLine(); // Clear buffer
+            System.out.println(
+                "\n1. 3 bulan, Bunga 10%\n2. 6 bulan, Bunga 15%\n3. 12 bulan, Bunga 20%\n4. 24 bulan, Bunga 25%\n5. 36 bulan, Bunga 30%\n");
+            System.out.print("Pilih Jangka Waktu Pinjaman (1-5): ");
+            int pilihanJangkaWaktu = input.nextInt();
+            input.nextLine(); // Clear buffer
 
-        if (pilihanJangkaWaktu < 1 || pilihanJangkaWaktu > 5) {
-          System.out.println("Pilihan tidak valid. Silakan coba lagi.");
-          return;
-        } else if (pilihanJangkaWaktu == 1) {
-          System.out.println("Jangka Waktu Pinjaman: 3 bulan, Bunga 10%");
-          jangkaWaktuPinjaman = 3;
-          bungaPinjaman = 10.0;
-        } else if (pilihanJangkaWaktu == 2) {
-          System.out.println("Jangka Waktu Pinjaman: 6 bulan, Bunga 15%");
-          jangkaWaktuPinjaman = 6;
-          bungaPinjaman = 15.0;
-        } else if (pilihanJangkaWaktu == 3) {
-          System.out.println("Jangka Waktu Pinjaman: 12 bulan, Bunga 20%");
-          jangkaWaktuPinjaman = 12;
-          bungaPinjaman = 20.0;
-        } else if (pilihanJangkaWaktu == 4) {
-          System.out.println("Jangka Waktu Pinjaman: 24 bulan, Bunga 25%");
-          jangkaWaktuPinjaman = 24;
-          bungaPinjaman = 25.0;
-        } else if (pilihanJangkaWaktu == 5) {
-          System.out.println("Jangka Waktu Pinjaman: 36 bulan, Bunga 30%");
-          jangkaWaktuPinjaman = 36;
-          bungaPinjaman = 30.0;
+            if (pilihanJangkaWaktu < 1 || pilihanJangkaWaktu > 5) {
+              System.out.println("Pilihan tidak valid. Silakan coba lagi.");
+              return;
+            } else if (pilihanJangkaWaktu == 1) {
+              System.out.println("Jangka Waktu Pinjaman: 3 bulan, Bunga 10%");
+              jangkaWaktuPinjaman = 3;
+              bungaPinjaman = 10.0;
+            } else if (pilihanJangkaWaktu == 2) {
+              System.out.println("Jangka Waktu Pinjaman: 6 bulan, Bunga 15%");
+              jangkaWaktuPinjaman = 6;
+              bungaPinjaman = 15.0;
+            } else if (pilihanJangkaWaktu == 3) {
+              System.out.println("Jangka Waktu Pinjaman: 12 bulan, Bunga 20%");
+              jangkaWaktuPinjaman = 12;
+              bungaPinjaman = 20.0;
+            } else if (pilihanJangkaWaktu == 4) {
+              System.out.println("Jangka Waktu Pinjaman: 24 bulan, Bunga 25%");
+              jangkaWaktuPinjaman = 24;
+              bungaPinjaman = 25.0;
+            } else if (pilihanJangkaWaktu == 5) {
+              System.out.println("Jangka Waktu Pinjaman: 36 bulan, Bunga 30%");
+              jangkaWaktuPinjaman = 36;
+              bungaPinjaman = 30.0;
+            }
+            pinjaman.get(nomorPengajuan - 1).setJumlahPinjaman(jumlahPinjaman);
+            pinjaman.get(nomorPengajuan - 1).setJangkaWaktuPinjaman(jangkaWaktuPinjaman);
+            pinjaman.get(nomorPengajuan - 1).setBungaPinjaman(bungaPinjaman);
+            System.out.println("Pengajuan berhasil diubah.");
+            return;
+          }
+        } else {
+          System.out.println("Nomor pengajuan tidak valid.");
         }
-        pinjaman.get(nomorPengajuan - 1).setJumlahPinjaman(jumlahPinjaman);
-        pinjaman.get(nomorPengajuan - 1).setJangkaWaktuPinjaman(jangkaWaktuPinjaman);
-        pinjaman.get(nomorPengajuan - 1).setBungaPinjaman(bungaPinjaman);
-        System.out.println("Pengajuan berhasil diubah.");
-        return;
       }
-    } else {
-      System.out.println("Nomor pengajuan tidak valid.");
     }
   }
 
@@ -599,18 +602,19 @@ class User extends Pengguna {
       return;
     }
     lihatStatusPending();
-    System.out.print("Nomor Pengajuan: ");
-    int nomorPengajuan = input.nextInt();
-    input.nextLine(); // Clear buffer
-    if (nomorPengajuan > 0 && nomorPengajuan <= pinjaman.size()) {
-      if (pinjaman.get(nomorPengajuan - 1).getStatuspinjaman().equals("Menunggu")) {
-        pinjaman.remove(nomorPengajuan - 1);
-        System.out.println("Pengajuan berhasil dibatalkan.");
-      } else {
-        System.out.println("Pengajuan tidak dapat dibatalkan karena status bukan Menunggu.");
+
+    ArrayList<Pinjaman> toRemove = new ArrayList<>();
+    for (Pinjaman pinjamanItem : pinjaman) {
+      if (pinjamanItem.getStatuspinjaman().equals("Pending")
+          && pinjamanItem.getNamaPeminjam().equals(usernames.get(penggunaSekarang - 1))) {
+        toRemove.add(pinjamanItem);
       }
+    }
+    if (toRemove.isEmpty()) {
+      System.out.println("Tidak ada pengajuan yang dapat dibatalkan.");
     } else {
-      System.out.println("Nomor pengajuan tidak valid.");
+      pinjaman.removeAll(toRemove);
+      System.out.println("Pengajuan berhasil dibatalkan.");
     }
   }
 

@@ -394,10 +394,10 @@ class User extends Pengguna {
           case "5":
             batalkanPengajuan();
             break;
+          // case "6":
+          // catatPembayaran();
+          // break;
           case "6":
-            catatPembayaran();
-            break;
-          case "7":
             System.out.println("Keluar");
             return 1;
           default:
@@ -417,8 +417,8 @@ class User extends Pengguna {
     System.out.println("3. Lihat Status Pengajuan");
     System.out.println("4. Edit Pengajuan");
     System.out.println("5. Batalkan Pengajuan");
-    System.out.println("6. Catat Pembayaran");
-    System.out.println("7. Keluar");
+    // System.out.println("6. Catat Pembayaran");
+    System.out.println("6. Keluar");
     System.out.println("");
   }
 

@@ -14,54 +14,28 @@ public class Pengguna {
   protected Integer penggunaSekarang;
   protected String menu = null;
 
-  public ArrayList<String> getUsernames() {
-    return usernames;
-  }
-
-  public ArrayList<String> getPasswords() {
-    return passwords;
-  }
-
-  public ArrayList<String> getRoles() {
-    return roles;
-  }
-
-  public ArrayList<Integer> getIds() {
-    return ids;
-  }
-
-  public ArrayList<String> getEmails() {
-    return emails;
-  }
-
-  public ArrayList<String> getNomorTelepons() {
-    return nomorTelepons;
-  }
-
-  public ArrayList<String> getNiks() {
-    return niks;
-  }
-
-  public ArrayList<Pinjaman> getPinjaman() {
-    return pinjaman;
-  }
-
-  public Integer getPenggunaSekarang() {
-    return penggunaSekarang;
-  }
+  public ArrayList<String> getUsernames() { return usernames; }
+  public ArrayList<String> getPasswords() { return passwords; }
+  public ArrayList<String> getRoles() { return roles; }
+  public ArrayList<Integer> getIds() { return ids; }
+  public ArrayList<String> getEmails() { return emails; }
+  public ArrayList<String> getNomorTelepons() { return nomorTelepons; }
+  public ArrayList<String> getNiks() { return niks; }
+  public ArrayList<Pinjaman> getPinjaman() { return pinjaman; }
+  public Integer getPenggunaSekarang() { return penggunaSekarang; }
 
   // user admin
   final protected String usernameAdmin = "admin";
   final protected String passwordAdmin = "admin";
   final protected String emailAdmin = "admin@example.com";
-  final protected String nomorTeleponAdmin = "08123456789";
+  final protected String nomorTeleponAdmin = "08123456689";
   final protected String nikAdmin = "1234567890";
 
   // user daffa
   final protected String userExample = "daffa";
   final protected String passwordExample = "daffa";
   final protected String emailExample = "daffa@example.com";
-  final protected String nomorTeleponExample = "08223456789";
+  final protected String nomorTeleponExample = "08223456689";
   final protected String nikExample = "1234567892";
 
   public Pengguna() {
@@ -73,7 +47,6 @@ public class Pengguna {
     niks.add(nikAdmin);
     ids.add(usernames.size());
 
-    // Default user
     usernames.add(userExample);
     passwords.add(passwordExample);
     roles.add("peminjam");
@@ -177,41 +150,15 @@ public class Pengguna {
     }
   }
 
-  public void setUsername(ArrayList<String> usernames) {
-    this.usernames = usernames;
-  }
-
-  public void setPasswords(ArrayList<String> passwords) {
-    this.passwords = passwords;
-  }
-
-  public void setRoles(ArrayList<String> roles) {
-    this.roles = roles;
-  }
-
-  public void setIds(ArrayList<Integer> ids) {
-    this.ids = ids;
-  }
-
-  public void setEmails(ArrayList<String> emails) {
-    this.emails = emails;
-  }
-
-  public void setNomorTelepons(ArrayList<String> nomorTelepons) {
-    this.nomorTelepons = nomorTelepons;
-  }
-
-  public void setNiks(ArrayList<String> niks) {
-    this.niks = niks;
-  }
-
-  public void setPinjaman(ArrayList<Pinjaman> pinjaman) {
-    this.pinjaman = pinjaman;
-  }
-
-  public void setPenggunaSekarang(Integer penggunaSekarang) {
-    this.penggunaSekarang = penggunaSekarang;
-  }
+  public void setUsername(ArrayList<String> usernames) { this.usernames = usernames; }
+  public void setPasswords(ArrayList<String> passwords) { this.passwords = passwords; }
+  public void setRoles(ArrayList<String> roles) { this.roles = roles; }
+  public void setIds(ArrayList<Integer> ids) { this.ids = ids; }
+  public void setEmails(ArrayList<String> emails) { this.emails = emails; }
+  public void setNomorTelepons(ArrayList<String> nomorTelepons) { this.nomorTelepons = nomorTelepons; }
+  public void setNiks(ArrayList<String> niks) { this.niks = niks; }
+  public void setPinjaman(ArrayList<Pinjaman> pinjaman) { this.pinjaman = pinjaman; }
+  public void setPenggunaSekarang(Integer penggunaSekarang) { this.penggunaSekarang = penggunaSekarang; }
 }
 
 class Admin extends Pengguna {
@@ -222,9 +169,10 @@ class Admin extends Pengguna {
     System.out.println("1. Lihat Semua Pengguna");
     System.out.println("2. Daftar Pengajuan Pinjaman");
     System.out.println("3. Setujui/Tolak Pengajuan Pinjaman");
-    System.out.println("4. Status Pembayaran Pinjaman");
-    System.out.println("5. Riwayat Pinjaman");
-    System.out.println("6. Keluar");
+    System.out.println("4. Ubah Status Pembayaran");
+    System.out.println("5. Status Pembayaran Pinjaman");
+    System.out.println("6. Riwayat Pinjaman");
+    System.out.println("7. Keluar");
     System.out.println("");
     Scanner input = new Scanner(System.in);
     try {
@@ -240,12 +188,15 @@ class Admin extends Pengguna {
           setujuiTolakPengajuan();
           break;
         case "4":
-          statusPembayaranPinjaman();
+          ubahStatusPembayaran();
           break;
         case "5":
-          riwayatPinjaman();
+          statusPembayaranPinjaman();
           break;
         case "6":
+          riwayatPinjaman();
+          break;
+        case "7":
           System.out.println("Keluar");
           return 1;
         default:
@@ -319,8 +270,8 @@ class Admin extends Pengguna {
     }
   }
 
-  private void statusPembayaranPinjaman() {
-    System.out.println("Status Pembayaran Pinjaman");
+  private void ubahStatusPembayaran() {
+    System.out.println("Ubah Status Pembayaran Pinjaman");
     if (pinjaman.isEmpty()) {
       System.out.println("Belum ada pinjaman yang terdaftar.");
       return;
@@ -333,13 +284,70 @@ class Admin extends Pengguna {
         System.out.println("Jumlah Pinjaman: " + pinjaman.get(i).getJumlahPinjaman());
         System.out.println("Jangka Waktu: " + pinjaman.get(i).getJangkaWaktuPinjaman() + " bulan");
         System.out.println("Bunga: " + pinjaman.get(i).getBungaPinjaman() + "%");
-        System.out.println("Status: " + pinjaman.get(i).getStatuspinjaman());
         System.out.println("Nama Peminjam: " + pinjaman.get(i).getNamaPeminjam());
         System.out.println("-----------------------------");
       }
     }
     if (!adaPinjamanDisetujui) {
       System.out.println("Belum ada pinjaman yang disetujui.");
+      return;
+    }
+    System.out.print("Pilih nomor pinjaman: ");
+    int nomorPinjaman = Integer.parseInt(input.nextLine());
+    if (nomorPinjaman > 0 && nomorPinjaman <= pinjaman.size()) {
+      if (pinjaman.get(nomorPinjaman - 1).getStatuspinjaman().equals("Disetujui")) {
+        System.out.println("1. Lunas");
+        System.out.println("2. Belum Lunas");
+        System.out.println("3. Dalam Proses");
+        String statusPembayaran = input.nextLine();
+        switch (statusPembayaran) {
+          case "1":
+            pinjaman.get(nomorPinjaman - 1).setStatusPinjaman("Lunas");
+            System.out.println("Status pembayaran diubah menjadi Lunas.");
+            break;
+          case "2":
+            pinjaman.get(nomorPinjaman - 1).setStatusPinjaman("Belum Lunas");
+            System.out.println("Status pembayaran diubah menjadi Belum Lunas.");
+            break;
+          case "3":
+            pinjaman.get(nomorPinjaman - 1).setStatusPinjaman("Dalam Proses");
+            System.out.println("Status pembayaran diubah menjadi Dalam Proses.");
+            break;
+          default:
+            System.out.println("Pilihan tidak valid.");
+        }
+      } else {
+        System.out.println("Pinjaman belum disetujui, tidak dapat mengubah status pembayaran.");
+      }
+    } else {
+      System.out.println("Nomor pinjaman tidak valid.");
+    }
+  }
+
+  private void statusPembayaranPinjaman() {
+    System.out.println("Status Pembayaran Pinjaman");
+    if (pinjaman.isEmpty()) {
+      System.out.println("Belum ada pinjaman yang terdaftar.");
+      return;
+    }
+    boolean adaPinjamanDisetujui = false;
+    for (int i = 0; i < pinjaman.size(); i++) {
+      if (pinjaman.get(i).getStatuspinjaman().equals("Disetujui") ||
+          pinjaman.get(i).getStatuspinjaman().equals("Lunas") ||
+          pinjaman.get(i).getStatuspinjaman().equals("Belum Lunas") ||
+          pinjaman.get(i).getStatuspinjaman().equals("Dalam Proses")) {
+        adaPinjamanDisetujui = true;
+        System.out.println("Pinjaman " + (i + 1));
+        System.out.println("Jumlah Pinjaman: " + pinjaman.get(i).getJumlahPinjaman());
+        System.out.println("Jangka Waktu: " + pinjaman.get(i).getJangkaWaktuPinjaman() + " bulan");
+        System.out.println("Bunga: " + pinjaman.get(i).getBungaPinjaman() + "%");
+        System.out.println("Status: " + pinjaman.get(i).getStatuspinjaman());
+        System.out.println("Nama Peminjam: " + pinjaman.get(i).getNamaPeminjam());
+        System.out.println("-----------------------------");
+      }
+    }
+    if (!adaPinjamanDisetujui) {
+      System.out.println("Belum ada pinjaman yang memiliki status pembayaran.");
     }
   }
 
@@ -359,15 +367,6 @@ class Admin extends Pengguna {
       System.out.println("-----------------------------");
     }
   }
-
-  // private void lihatProfil() {
-  // System.out.println("Profil Pengguna");
-  // System.out.println("NIK: " + niks.get(penggunaSekarang - 1));
-  // System.out.println("Nama Pengguna: " + usernames.get(penggunaSekarang - 1));
-  // System.out.println("Email: " + emails.get(penggunaSekarang - 1));
-  // System.out.println("Nomor Telepon: " + nomorTelepons.get(penggunaSekarang -
-  // 1));
-  // }
 }
 
 class User extends Pengguna {
@@ -394,9 +393,6 @@ class User extends Pengguna {
           case "5":
             batalkanPengajuan();
             break;
-          // case "6":
-          // catatPembayaran();
-          // break;
           case "6":
             System.out.println("Keluar");
             return 1;
@@ -417,14 +413,13 @@ class User extends Pengguna {
     System.out.println("3. Lihat Status Pengajuan");
     System.out.println("4. Edit Pengajuan");
     System.out.println("5. Batalkan Pengajuan");
-    // System.out.println("6. Catat Pembayaran");
     System.out.println("6. Keluar");
     System.out.println("");
   }
 
   private Boolean cekDuplikatPengajuan(String namaPeminjam) {
     for (Pinjaman pinjamanItem : pinjaman) {
-      if (pinjamanItem.getNamaPeminjam().equals(namaPeminjam) && pinjamanItem.getStatuspinjaman().equals("Pending")) {
+      if (pinjamanItem.getNamaPeminjam().equals(namaPeminjam) && pinjamanItem.getStatuspinjaman().equals("Menunggu")) {
         return true;
       }
     }
@@ -441,15 +436,14 @@ class User extends Pengguna {
 
   private void ajukanPinjaman() {
     if (cekDuplikatPengajuan(usernames.get(penggunaSekarang - 1))) {
-      System.err.println("sudah ada pengajuan pinjaman.");
+      System.err.println("Sudah ada pengajuan pinjaman.");
       return;
     }
     System.out.println("Ajukan Pinjaman");
     System.out.print("Nominal yang ingin Dipinjam: ");
     int jumlahPinjaman = input.nextInt();
     input.nextLine(); // Clear buffer
-    System.out.println(
-        "\n1. 3 bulan, Bunga 10%\n2. 6 bulan, Bunga 15%\n3. 12 bulan, Bunga 20%\n4. 24 bulan, Bunga 25%\n5. 36 bulan, Bunga 30%\n");
+    System.out.println("\n1. 3 bulan, Bunga 10%\n2. 6 bulan, Bunga 15%\n3. 12 bulan, Bunga 20%\n4. 24 bulan, Bunga 25%\n5. 36 bulan, Bunga 30%\n");
     System.out.print("Pilih Jangka Waktu Pinjaman (1-5): ");
 
     int pilihanJangkaWaktu = input.nextInt();
@@ -483,7 +477,7 @@ class User extends Pengguna {
       bungaPinjaman = 30.0;
     }
 
-    String statusPinjaman = "Pending";
+    String statusPinjaman = "Menunggu";
     String namaPeminjam = usernames.get(penggunaSekarang - 1);
 
     pinjaman.add(new Pinjaman(jumlahPinjaman, jangkaWaktuPinjaman, bungaPinjaman, statusPinjaman, namaPeminjam));
@@ -493,38 +487,20 @@ class User extends Pengguna {
 
   private void lihatStatusPending() {
     System.out.println("Status Pengajuan Pinjaman");
+    boolean adaPengajuanPending = false;
     for (Pinjaman pinjamanItem : pinjaman) {
-      if (pinjamanItem.getStatuspinjaman().equals("Pending")) {
+      if (pinjamanItem.getStatuspinjaman().equals("Menunggu") && pinjamanItem.getNamaPeminjam().equals(usernames.get(penggunaSekarang - 1))) {
+        adaPengajuanPending = true;
         System.out.println("Jumlah Pinjaman: " + pinjamanItem.getJumlahPinjaman());
         System.out.println("Jangka Waktu Pinjaman: " + pinjamanItem.getJangkaWaktuPinjaman() + " bulan");
         System.out.println("Bunga Pinjaman: " + pinjamanItem.getBungaPinjaman() + "%");
         System.out.println("Status Pinjaman: " + pinjamanItem.getStatuspinjaman());
-        return;
       }
     }
-    System.out.println("Belum ada pengajuan pinjaman");
+    if (!adaPengajuanPending) {
+      System.out.println("Belum ada pengajuan pinjaman yang menunggu.");
+    }
   }
-
-  // private void lihatStatus() {
-  // System.out.println("Status Pengajuan");
-  // if (pinjaman.isEmpty()) {
-  // System.out.println("Belum ada pengajuan pinjaman.");
-  // return;
-  // }
-  // for (int i = 0; i < pinjaman.size(); i++) {
-  // System.out.println("Pengajuan " + (i + 1));
-  // System.out.println("Jumlah Pinjaman: " +
-  // pinjaman.get(i).getJumlahPinjaman());
-  // System.out.println("Jangka Waktu Pinjaman: " +
-  // pinjaman.get(i).getJangkaWaktuPinjaman() + " bulan");
-  // System.out.println("Bunga Pinjaman: " + pinjaman.get(i).getBungaPinjaman() +
-  // "%");
-  // System.out.println("Status Pinjaman: " +
-  // pinjaman.get(i).getStatuspinjaman());
-  // System.out.println("Nama Peminjam: " + pinjaman.get(i).getNamaPeminjam());
-  // System.out.println("-----------------------------");
-  // }
-  // }
 
   private void editPengajuan() {
     System.out.println("Edit Pengajuan");
@@ -533,65 +509,58 @@ class User extends Pengguna {
       return;
     }
     lihatStatusPending();
-    System.out.println("");
+    System.out.print("Masukkan nominal pengajuan yang ingin diedit: ");
+    int nominalPengajuan = input.nextInt();
+    input.nextLine(); // Clear buffer
+    boolean found = false;
     for (Pinjaman pinjamanItem : pinjaman) {
-      if (pinjamanItem.getStatuspinjaman().equals("Pending")
-          && pinjamanItem.getNamaPeminjam().equals(usernames.get(penggunaSekarang - 1))) {
-        int nomorPengajuan = pinjaman.indexOf(pinjamanItem) + 1;
-        int jumlahPinjaman = 0;
+      if (pinjamanItem.getJumlahPinjaman() == nominalPengajuan && pinjamanItem.getStatuspinjaman().equals("Menunggu") && pinjamanItem.getNamaPeminjam().equals(usernames.get(penggunaSekarang - 1))) {
+        found = true;
+        System.out.print("Jumlah Pinjaman Baru: ");
+        int jumlahPinjamanBaru = input.nextInt();
+        input.nextLine(); // Clear buffer
+        System.out.println("\n1. 3 bulan, Bunga 10%\n2. 6 bulan, Bunga 15%\n3. 12 bulan, Bunga 20%\n4. 24 bulan, Bunga 25%\n5. 36 bulan, Bunga 30%\n");
+        System.out.print("Pilih Jangka Waktu Pinjaman (1-5): ");
+        int pilihanJangkaWaktu = input.nextInt();
+        input.nextLine(); // Clear buffer
+
         int jangkaWaktuPinjaman = 0;
         double bungaPinjaman = 0.0;
-        if (nomorPengajuan > 0 && nomorPengajuan <= pinjaman.size()) {
-          if (pinjaman.get(nomorPengajuan - 1).getStatuspinjaman().equals("Disetujui")) {
-            System.out.println("Pengajuan sudah disetujui, tidak bisa diubah.");
-            return;
-          } else if (pinjaman.get(nomorPengajuan - 1).getStatuspinjaman().equals("Ditolak")) {
-            System.out.println("Pengajuan sudah ditolak, tidak bisa diubah.");
-            return;
-          } else if (pinjaman.get(nomorPengajuan - 1).getStatuspinjaman().equals("Pending")) {
-            System.out.print("Jumlah Pinjaman: ");
-            jumlahPinjaman = input.nextInt();
-            input.nextLine(); // Clear buffer
-            System.out.println(
-                "\n1. 3 bulan, Bunga 10%\n2. 6 bulan, Bunga 15%\n3. 12 bulan, Bunga 20%\n4. 24 bulan, Bunga 25%\n5. 36 bulan, Bunga 30%\n");
-            System.out.print("Pilih Jangka Waktu Pinjaman (1-5): ");
-            int pilihanJangkaWaktu = input.nextInt();
-            input.nextLine(); // Clear buffer
 
-            if (pilihanJangkaWaktu < 1 || pilihanJangkaWaktu > 5) {
-              System.out.println("Pilihan tidak valid. Silakan coba lagi.");
-              return;
-            } else if (pilihanJangkaWaktu == 1) {
-              System.out.println("Jangka Waktu Pinjaman: 3 bulan, Bunga 10%");
-              jangkaWaktuPinjaman = 3;
-              bungaPinjaman = 10.0;
-            } else if (pilihanJangkaWaktu == 2) {
-              System.out.println("Jangka Waktu Pinjaman: 6 bulan, Bunga 15%");
-              jangkaWaktuPinjaman = 6;
-              bungaPinjaman = 15.0;
-            } else if (pilihanJangkaWaktu == 3) {
-              System.out.println("Jangka Waktu Pinjaman: 12 bulan, Bunga 20%");
-              jangkaWaktuPinjaman = 12;
-              bungaPinjaman = 20.0;
-            } else if (pilihanJangkaWaktu == 4) {
-              System.out.println("Jangka Waktu Pinjaman: 24 bulan, Bunga 25%");
-              jangkaWaktuPinjaman = 24;
-              bungaPinjaman = 25.0;
-            } else if (pilihanJangkaWaktu == 5) {
-              System.out.println("Jangka Waktu Pinjaman: 36 bulan, Bunga 30%");
-              jangkaWaktuPinjaman = 36;
-              bungaPinjaman = 30.0;
-            }
-            pinjaman.get(nomorPengajuan - 1).setJumlahPinjaman(jumlahPinjaman);
-            pinjaman.get(nomorPengajuan - 1).setJangkaWaktuPinjaman(jangkaWaktuPinjaman);
-            pinjaman.get(nomorPengajuan - 1).setBungaPinjaman(bungaPinjaman);
-            System.out.println("Pengajuan berhasil diubah.");
-            return;
-          }
-        } else {
-          System.out.println("Nomor pengajuan tidak valid.");
+        if (pilihanJangkaWaktu < 1 || pilihanJangkaWaktu > 5) {
+          System.out.println("Pilihan tidak valid. Silakan coba lagi.");
+          return;
+        } else if (pilihanJangkaWaktu == 1) {
+          System.out.println("Jangka Waktu Pinjaman: 3 bulan, Bunga 10%");
+          jangkaWaktuPinjaman = 3;
+          bungaPinjaman = 10.0;
+        } else if (pilihanJangkaWaktu == 2) {
+          System.out.println("Jangka Waktu Pinjaman: 6 bulan, Bunga 15%");
+          jangkaWaktuPinjaman = 6;
+          bungaPinjaman = 15.0;
+        } else if (pilihanJangkaWaktu == 3) {
+          System.out.println("Jangka Waktu Pinjaman: 12 bulan, Bunga 20%");
+          jangkaWaktuPinjaman = 12;
+          bungaPinjaman = 20.0;
+        } else if (pilihanJangkaWaktu == 4) {
+          System.out.println("Jangka Waktu Pinjaman: 24 bulan, Bunga 25%");
+          jangkaWaktuPinjaman = 24;
+          bungaPinjaman = 25.0;
+        } else if (pilihanJangkaWaktu == 5) {
+          System.out.println("Jangka Waktu Pinjaman: 36 bulan, Bunga 30%");
+          jangkaWaktuPinjaman = 36;
+          bungaPinjaman = 30.0;
         }
+
+        pinjamanItem.setJumlahPinjaman(jumlahPinjamanBaru);
+        pinjamanItem.setJangkaWaktuPinjaman(jangkaWaktuPinjaman);
+        pinjamanItem.setBungaPinjaman(bungaPinjaman);
+        System.out.println("Pengajuan berhasil diubah.");
+        break;
       }
+    }
+    if (!found) {
+      System.out.println("Pengajuan dengan nominal tersebut tidak ditemukan atau statusnya bukan Menunggu.");
     }
   }
 
@@ -602,60 +571,17 @@ class User extends Pengguna {
       return;
     }
     lihatStatusPending();
-
-    ArrayList<Pinjaman> toRemove = new ArrayList<>();
+    boolean found = false;
     for (Pinjaman pinjamanItem : pinjaman) {
-      if (pinjamanItem.getStatuspinjaman().equals("Pending")
-          && pinjamanItem.getNamaPeminjam().equals(usernames.get(penggunaSekarang - 1))) {
-        toRemove.add(pinjamanItem);
+      if (pinjamanItem.getStatuspinjaman().equals("Menunggu") && pinjamanItem.getNamaPeminjam().equals(usernames.get(penggunaSekarang - 1))) {
+        found = true;
+        pinjaman.remove(pinjamanItem);
+        System.out.println("Pembatalan pengajuan berhasil dilakukan.");
+        break;
       }
     }
-    if (toRemove.isEmpty()) {
-      System.out.println("Tidak ada pengajuan yang dapat dibatalkan.");
-    } else {
-      pinjaman.removeAll(toRemove);
-      System.out.println("Pengajuan berhasil dibatalkan.");
-    }
-  }
-
-  private void catatPembayaran() {
-    System.out.println("Catat Pembayaran");
-    if (pinjaman.isEmpty()) {
-      System.out.println("Belum ada pinjaman yang terdaftar.");
-      return;
-    }
-    boolean adaPinjamanDisetujui = false;
-    for (int i = 0; i < pinjaman.size(); i++) {
-      if (pinjaman.get(i).getStatuspinjaman().equals("Disetujui")) {
-        adaPinjamanDisetujui = true;
-        System.out.println("Pinjaman " + (i + 1));
-        System.out.println("Jumlah Pinjaman: " + pinjaman.get(i).getJumlahPinjaman());
-        System.out.println("Jangka Waktu: " + pinjaman.get(i).getJangkaWaktuPinjaman() + " bulan");
-        System.out.println("Bunga: " + pinjaman.get(i).getBungaPinjaman() + "%");
-        System.out.println("Status: " + pinjaman.get(i).getStatuspinjaman());
-        System.out.println("Nama Peminjam: " + pinjaman.get(i).getNamaPeminjam());
-        System.out.println("-----------------------------");
-      }
-    }
-    if (!adaPinjamanDisetujui) {
-      System.out.println("Belum ada pinjaman yang disetujui.");
-      return;
-    }
-    System.out.print("Nomor Pinjaman: ");
-    int nomorPinjaman = input.nextInt();
-    input.nextLine(); // Clear buffer
-    if (nomorPinjaman > 0 && nomorPinjaman <= pinjaman.size()) {
-      if (pinjaman.get(nomorPinjaman - 1).getStatuspinjaman().equals("Disetujui")) {
-        System.out.print("Jumlah Pembayaran: ");
-        double jumlahPembayaran = input.nextDouble();
-        input.nextLine(); // Clear buffer
-        pinjaman.get(nomorPinjaman - 1).catatPembayaran(jumlahPembayaran);
-        System.out.println("Pembayaran berhasil dicatat.");
-      } else {
-        System.out.println("Pinjaman belum disetujui.");
-      }
-    } else {
-      System.out.println("Nomor pinjaman tidak valid.");
+    if (!found) {
+      System.out.println("Tidak ada pengajuan yang bisa dibatalkan.");
     }
   }
 }

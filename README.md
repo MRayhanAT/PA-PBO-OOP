@@ -1,18 +1,11 @@
-## Getting Started
+## Proyek Akhir Praktikum PBO
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Selamat datang di repositori kami. program sederhana yang ada di repo ini adalah program Peminjaman Online(Judol).
 
-## Folder Structure
+## Anggota kelompok
 
-The workspace contains two folders by default, where:
+Berikut adalah anggota kelompok yang ikut berkontribusi dalam program sederhana ini :
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+- Muh Ghazy Daffa Sampe
 
 > If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).

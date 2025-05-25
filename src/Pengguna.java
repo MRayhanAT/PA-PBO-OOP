@@ -84,24 +84,113 @@ public class Pengguna {
           }
         case "2":
           System.out.println("Daftar");
-          System.out.print("NIK: ");
-          String nik = input.nextLine();
+            System.out.print("NIK: ");
+            String nik = input.nextLine();
+            while (true) {
+              if (nik.isEmpty()) {
+              System.out.println("NIK tidak boleh kosong.");
+              } else if (!nik.matches("\\d+")) {
+              System.out.println("NIK harus berupa angka.");
+              } else if (nik.length() < 5 || nik.length() > 10) {
+              System.out.println("NIK harus terdiri dari 5 hingga 10 digit angka.");
+              } else if (niks.contains(nik)) {
+              System.out.println("NIK sudah terdaftar.");
+              } else {
+              break;
+              }
+              System.out.print("NIK: ");
+              nik = input.nextLine();
+            }
           System.out.print("Nama Pengguna: ");
           String usernameBaru = input.nextLine();
           try {
-            if (usernames.contains(usernameBaru)) {
-              throw new Exception("Nama pengguna sudah ada.");
+
+            if (usernameBaru.isEmpty()) {
+                while (usernameBaru.isEmpty()) {
+                System.out.println("Nama pengguna tidak boleh kosong.");
+                System.out.print("Nama Pengguna: ");
+                usernameBaru = input.nextLine();
+                }
+
+            } else if (usernameBaru.length() < 3) {
+              while (usernameBaru.length() < 3) {
+                System.out.println("Nama pengguna harus terdiri dari minimal 3 karakter.");
+                System.out.print("Nama Pengguna: ");
+                usernameBaru = input.nextLine();
+              }
+
+            } else if (!usernameBaru.matches("[a-zA-Z0-9_]+")) {
+              while (usernameBaru.matches("[a-zA-Z0-9_]+")) {
+                System.out.println("Nama pengguna hanya boleh mengandung huruf, angka, dan garis bawah.");
+                System.out.print("Nama Pengguna: ");
+                usernameBaru = input.nextLine();
+              }
+
+            } else if (usernameBaru.length() > 20) {
+              while (usernameBaru.length() > 20) {
+                System.out.println("Nama pengguna tidak boleh lebih dari 20 karakter.");
+                System.out.print("Nama Pengguna: ");
+                usernameBaru = input.nextLine();
+              }
+            }
+
+            else if (usernames.contains(usernameBaru)) {
+              while (usernameBaru.contains(usernameBaru)) {
+                System.out.println("Nama pengguna sudah ada.");
+                System.out.print("Nama Pengguna: ");
+                usernameBaru = input.nextLine();
+              }
             }
           } catch (Exception e) {
             System.out.println(e.getMessage());
             return 0;
           }
-          System.out.print("Email: ");
-          String email = input.nextLine();
-          System.out.print("Nomor Telepon: ");
-          String nomorTelepon = input.nextLine();
-          System.out.print("Kata Sandi: ");
-          String passwordBaru = input.nextLine();
+            // Email
+            System.out.print("Email: ");
+            String email = input.nextLine();
+            while (true) {
+            if (email.isEmpty()) {
+              System.out.println("Email tidak boleh kosong.");
+            } else if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+              System.out.println("Format email tidak valid.");
+            } else {
+              break;
+            }
+            System.out.print("Email: ");
+            email = input.nextLine();
+            }
+
+            // Nomor Telepon
+            System.out.print("Nomor Telepon: ");
+            String nomorTelepon = input.nextLine();
+            while (true) {
+            if (nomorTelepon.isEmpty()) {
+              System.out.println("Nomor telepon tidak boleh kosong.");
+            } else if (!nomorTelepon.matches("^\\d{12,13}$")) {
+              System.out.println("Nomor telepon harus terdiri dari 12 hingga 13 digit.");
+            } else {
+              break;
+            }
+            System.out.print("Nomor Telepon: ");
+            nomorTelepon = input.nextLine();
+            }
+
+            // Kata Sandi
+            System.out.print("Kata Sandi: ");
+            String passwordBaru = input.nextLine();
+            while (true) {
+            if (passwordBaru.isEmpty()) {
+              System.out.println("Kata sandi tidak boleh kosong.");
+            } else if (passwordBaru.length() < 4) {
+              System.out.println("Kata sandi harus terdiri dari minimal 4 karakter.");
+            } else if (passwordBaru.length() > 20) {
+              System.out.println("Kata sandi tidak boleh lebih dari 20 karakter.");
+            } else {
+              break;
+            }
+            System.out.print("Kata Sandi: ");
+            passwordBaru = input.nextLine();
+            }
           daftar(nik, usernameBaru, email, nomorTelepon, passwordBaru, "peminjam");
           break;
         case "3":
@@ -440,22 +529,43 @@ class User extends Pengguna {
       return;
     }
     System.out.println("Ajukan Pinjaman");
-    System.out.print("Nominal yang ingin Dipinjam: ");
-    int jumlahPinjaman = input.nextInt();
-    input.nextLine(); // Clear buffer
-    System.out.println("\n1. 3 bulan, Bunga 10%\n2. 6 bulan, Bunga 15%\n3. 12 bulan, Bunga 20%\n4. 24 bulan, Bunga 25%\n5. 36 bulan, Bunga 30%\n");
-    System.out.print("Pilih Jangka Waktu Pinjaman (1-5): ");
+    int jumlahPinjaman = 0;
+    while (true) {
+      System.out.print("Nominal yang ingin Dipinjam: ");
+      String inputStr = input.nextLine();
+      try {
+        jumlahPinjaman = Integer.parseInt(inputStr);
+        if (jumlahPinjaman <= 0) {
+          System.out.println("Jumlah pinjaman harus lebih dari 0.");
+          continue;
+        }
+        break;
+      } catch (NumberFormatException e) {
+        System.out.println("Input harus berupa angka.");
+      }
+    }
 
-    int pilihanJangkaWaktu = input.nextInt();
-    input.nextLine(); // Clear buffer
+    System.out.println("\n1. 3 bulan, Bunga 10%\n2. 6 bulan, Bunga 15%\n3. 12 bulan, Bunga 20%\n4. 24 bulan, Bunga 25%\n5. 36 bulan, Bunga 30%\n");
+    int pilihanJangkaWaktu = 0;
+    while (true) {
+      System.out.print("Pilih Jangka Waktu Pinjaman (1-5): ");
+      String inputStr = input.nextLine();
+      try {
+        pilihanJangkaWaktu = Integer.parseInt(inputStr);
+        if (pilihanJangkaWaktu >= 1 && pilihanJangkaWaktu <= 5) {
+          break;
+        } else {
+          System.out.println("Pilihan harus antara 1 sampai 5. Silakan coba lagi.");
+        }
+      } catch (NumberFormatException e) {
+        System.out.println("Input harus berupa angka. Silakan coba lagi.");
+      }
+    }
 
     int jangkaWaktuPinjaman = 0;
     double bungaPinjaman = 0.0;
 
-    if (pilihanJangkaWaktu < 1 || pilihanJangkaWaktu > 5) {
-      System.out.println("Pilihan tidak valid. Silakan coba lagi.");
-      return;
-    } else if (pilihanJangkaWaktu == 1) {
+    if (pilihanJangkaWaktu == 1) {
       System.out.println("Jangka Waktu Pinjaman: 3 bulan, Bunga 10%");
       jangkaWaktuPinjaman = 3;
       bungaPinjaman = 10.0;
@@ -509,28 +619,62 @@ class User extends Pengguna {
       return;
     }
     lihatStatusPending();
-    System.out.print("Masukkan nominal pengajuan yang ingin diedit: ");
-    int nominalPengajuan = input.nextInt();
-    input.nextLine(); // Clear buffer
+    int nominalPengajuan = 0;
+    while (true) {
+      System.out.print("Masukkan nominal pengajuan yang ingin diedit: ");
+      String inputStr = input.nextLine();
+      try {
+        nominalPengajuan = Integer.parseInt(inputStr);
+        if (nominalPengajuan <= 0) {
+          System.out.println("Nominal harus lebih dari 0.");
+          continue;
+        }
+        break;
+      } catch (NumberFormatException e) {
+        System.out.println("Input harus berupa angka.");
+      }
+    }
     boolean found = false;
     for (Pinjaman pinjamanItem : pinjaman) {
       if (pinjamanItem.getJumlahPinjaman() == nominalPengajuan && pinjamanItem.getStatuspinjaman().equals("Menunggu") && pinjamanItem.getNamaPeminjam().equals(usernames.get(penggunaSekarang - 1))) {
         found = true;
-        System.out.print("Jumlah Pinjaman Baru: ");
-        int jumlahPinjamanBaru = input.nextInt();
-        input.nextLine(); // Clear buffer
+        int jumlahPinjamanBaru = 0;
+        while (true) {
+          System.out.print("Jumlah Pinjaman Baru: ");
+          String inputStr = input.nextLine();
+          try {
+            jumlahPinjamanBaru = Integer.parseInt(inputStr);
+            if (jumlahPinjamanBaru <= 0) {
+              System.out.println("Jumlah pinjaman harus lebih dari 0.");
+              continue;
+            }
+            break;
+          } catch (NumberFormatException e) {
+            System.out.println("Input harus berupa angka.");
+          }
+        }
+
         System.out.println("\n1. 3 bulan, Bunga 10%\n2. 6 bulan, Bunga 15%\n3. 12 bulan, Bunga 20%\n4. 24 bulan, Bunga 25%\n5. 36 bulan, Bunga 30%\n");
-        System.out.print("Pilih Jangka Waktu Pinjaman (1-5): ");
-        int pilihanJangkaWaktu = input.nextInt();
-        input.nextLine(); // Clear buffer
+        int pilihanJangkaWaktu = 0;
+        while (true) {
+          System.out.print("Pilih Jangka Waktu Pinjaman (1-5): ");
+          String inputStr = input.nextLine();
+          try {
+            pilihanJangkaWaktu = Integer.parseInt(inputStr);
+            if (pilihanJangkaWaktu >= 1 && pilihanJangkaWaktu <= 5) {
+              break;
+            } else {
+              System.out.println("Pilihan harus antara 1 sampai 5. Silakan coba lagi.");
+            }
+          } catch (NumberFormatException e) {
+            System.out.println("Input harus berupa angka. Silakan coba lagi.");
+          }
+        }
 
         int jangkaWaktuPinjaman = 0;
         double bungaPinjaman = 0.0;
 
-        if (pilihanJangkaWaktu < 1 || pilihanJangkaWaktu > 5) {
-          System.out.println("Pilihan tidak valid. Silakan coba lagi.");
-          return;
-        } else if (pilihanJangkaWaktu == 1) {
+        if (pilihanJangkaWaktu == 1) {
           System.out.println("Jangka Waktu Pinjaman: 3 bulan, Bunga 10%");
           jangkaWaktuPinjaman = 3;
           bungaPinjaman = 10.0;

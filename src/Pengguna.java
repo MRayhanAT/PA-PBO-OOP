@@ -14,15 +14,41 @@ public class Pengguna {
   protected Integer penggunaSekarang;
   protected String menu = null;
 
-  public ArrayList<String> getUsernames() { return usernames; }
-  public ArrayList<String> getPasswords() { return passwords; }
-  public ArrayList<String> getRoles() { return roles; }
-  public ArrayList<Integer> getIds() { return ids; }
-  public ArrayList<String> getEmails() { return emails; }
-  public ArrayList<String> getNomorTelepons() { return nomorTelepons; }
-  public ArrayList<String> getNiks() { return niks; }
-  public ArrayList<Pinjaman> getPinjaman() { return pinjaman; }
-  public Integer getPenggunaSekarang() { return penggunaSekarang; }
+  public ArrayList<String> getUsernames() {
+    return usernames;
+  }
+
+  public ArrayList<String> getPasswords() {
+    return passwords;
+  }
+
+  public ArrayList<String> getRoles() {
+    return roles;
+  }
+
+  public ArrayList<Integer> getIds() {
+    return ids;
+  }
+
+  public ArrayList<String> getEmails() {
+    return emails;
+  }
+
+  public ArrayList<String> getNomorTelepons() {
+    return nomorTelepons;
+  }
+
+  public ArrayList<String> getNiks() {
+    return niks;
+  }
+
+  public ArrayList<Pinjaman> getPinjaman() {
+    return pinjaman;
+  }
+
+  public Integer getPenggunaSekarang() {
+    return penggunaSekarang;
+  }
 
   // user admin
   final protected String usernameAdmin = "admin";
@@ -84,33 +110,35 @@ public class Pengguna {
           }
         case "2":
           System.out.println("Daftar");
-            System.out.print("NIK: ");
-            String nik = input.nextLine();
-            while (true) {
-              if (nik.isEmpty()) {
+          System.out.print("NIK: ");
+          String nik = input.nextLine();
+          while (true) {
+            if (nik.isEmpty()) {
               System.out.println("NIK tidak boleh kosong.");
-              } else if (!nik.matches("\\d+")) {
+            } else if (!nik.matches("\\d+")) {
               System.out.println("NIK harus berupa angka.");
-              } else if (nik.length() < 5 || nik.length() > 10) {
+            } else if (nik.contains(" ") || nik.contains("\t")) {
+              System.out.println("NIK tidak boleh berisi spasi.");
+            } else if (nik.length() < 5 || nik.length() > 10) {
               System.out.println("NIK harus terdiri dari 5 hingga 10 digit angka.");
-              } else if (niks.contains(nik)) {
+            } else if (niks.contains(nik)) {
               System.out.println("NIK sudah terdaftar.");
-              } else {
+            } else {
               break;
-              }
-              System.out.print("NIK: ");
-              nik = input.nextLine();
             }
+            System.out.print("NIK: ");
+            nik = input.nextLine();
+          }
           System.out.print("Nama Pengguna: ");
           String usernameBaru = input.nextLine();
           try {
 
             if (usernameBaru.isEmpty()) {
-                while (usernameBaru.isEmpty()) {
+              while (usernameBaru.isEmpty()) {
                 System.out.println("Nama pengguna tidak boleh kosong.");
                 System.out.print("Nama Pengguna: ");
                 usernameBaru = input.nextLine();
-                }
+              }
 
             } else if (usernameBaru.length() < 3) {
               while (usernameBaru.length() < 3) {
@@ -119,8 +147,15 @@ public class Pengguna {
                 usernameBaru = input.nextLine();
               }
 
+            } else if (usernameBaru.contains(" ") || usernameBaru.contains("\t")) {
+              while (usernameBaru.contains(" ") || usernameBaru.contains("\t")) {
+                System.out.println("Nama pengguna tidak boleh ada spasi.");
+                System.out.print("Nama Pengguna: ");
+                usernameBaru = input.nextLine();
+              }
+
             } else if (!usernameBaru.matches("[a-zA-Z0-9_]+")) {
-              while (usernameBaru.matches("[a-zA-Z0-9_]+")) {
+              while (!usernameBaru.matches("[a-zA-Z0-9_]+")) {
                 System.out.println("Nama pengguna hanya boleh mengandung huruf, angka, dan garis bawah.");
                 System.out.print("Nama Pengguna: ");
                 usernameBaru = input.nextLine();
@@ -145,52 +180,69 @@ public class Pengguna {
             System.out.println(e.getMessage());
             return 0;
           }
-            // Email
-            System.out.print("Email: ");
-            String email = input.nextLine();
-            while (true) {
+          // Email
+          System.out.print("Email: ");
+          String email = input.nextLine();
+          while (true) {
             if (email.isEmpty()) {
               System.out.println("Email tidak boleh kosong.");
+
             } else if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
               System.out.println("Format email tidak valid.");
+
+            } else if (emails.contains(" ") || email.contains("\t")) {
+              System.out.println("Email tidak boleh berisi spasi.");
+
+            } else if (emails.contains(email)) {
+              System.out.println("Email sudah terdaftar.");
+
             } else {
               break;
             }
             System.out.print("Email: ");
             email = input.nextLine();
-            }
+          }
 
-            // Nomor Telepon
-            System.out.print("Nomor Telepon: ");
-            String nomorTelepon = input.nextLine();
-            while (true) {
+          // Nomor Telepon
+          System.out.print("Nomor Telepon: ");
+          String nomorTelepon = input.nextLine();
+          while (true) {
             if (nomorTelepon.isEmpty()) {
               System.out.println("Nomor telepon tidak boleh kosong.");
             } else if (!nomorTelepon.matches("^\\d{12,13}$")) {
               System.out.println("Nomor telepon harus terdiri dari 12 hingga 13 digit.");
+
+            } else if (nomorTelepon.contains(" ") || nomorTelepon.contains("\t")) {
+              System.out.println("Nomor telepon tidak boleh berisi spasi.");
+
+            } else if (nomorTelepons.contains(nomorTelepon)) {
+              System.out.println("Nomor telepon sudah terdaftar.");
+
             } else {
               break;
             }
             System.out.print("Nomor Telepon: ");
             nomorTelepon = input.nextLine();
-            }
+          }
 
-            // Kata Sandi
-            System.out.print("Kata Sandi: ");
-            String passwordBaru = input.nextLine();
-            while (true) {
+          // Kata Sandi
+          System.out.print("Kata Sandi: ");
+          String passwordBaru = input.nextLine();
+          while (true) {
             if (passwordBaru.isEmpty()) {
               System.out.println("Kata sandi tidak boleh kosong.");
             } else if (passwordBaru.length() < 4) {
               System.out.println("Kata sandi harus terdiri dari minimal 4 karakter.");
             } else if (passwordBaru.length() > 20) {
               System.out.println("Kata sandi tidak boleh lebih dari 20 karakter.");
+            } else if (passwordBaru.contains(" ") || passwordBaru.contains("\t")) {
+              System.out.println("Kata sandi tidak boleh berisi spasi.");
             } else {
               break;
             }
             System.out.print("Kata Sandi: ");
             passwordBaru = input.nextLine();
-            }
+          }
           daftar(nik, usernameBaru, email, nomorTelepon, passwordBaru, "peminjam");
           break;
         case "3":
@@ -239,15 +291,41 @@ public class Pengguna {
     }
   }
 
-  public void setUsername(ArrayList<String> usernames) { this.usernames = usernames; }
-  public void setPasswords(ArrayList<String> passwords) { this.passwords = passwords; }
-  public void setRoles(ArrayList<String> roles) { this.roles = roles; }
-  public void setIds(ArrayList<Integer> ids) { this.ids = ids; }
-  public void setEmails(ArrayList<String> emails) { this.emails = emails; }
-  public void setNomorTelepons(ArrayList<String> nomorTelepons) { this.nomorTelepons = nomorTelepons; }
-  public void setNiks(ArrayList<String> niks) { this.niks = niks; }
-  public void setPinjaman(ArrayList<Pinjaman> pinjaman) { this.pinjaman = pinjaman; }
-  public void setPenggunaSekarang(Integer penggunaSekarang) { this.penggunaSekarang = penggunaSekarang; }
+  public void setUsername(ArrayList<String> usernames) {
+    this.usernames = usernames;
+  }
+
+  public void setPasswords(ArrayList<String> passwords) {
+    this.passwords = passwords;
+  }
+
+  public void setRoles(ArrayList<String> roles) {
+    this.roles = roles;
+  }
+
+  public void setIds(ArrayList<Integer> ids) {
+    this.ids = ids;
+  }
+
+  public void setEmails(ArrayList<String> emails) {
+    this.emails = emails;
+  }
+
+  public void setNomorTelepons(ArrayList<String> nomorTelepons) {
+    this.nomorTelepons = nomorTelepons;
+  }
+
+  public void setNiks(ArrayList<String> niks) {
+    this.niks = niks;
+  }
+
+  public void setPinjaman(ArrayList<Pinjaman> pinjaman) {
+    this.pinjaman = pinjaman;
+  }
+
+  public void setPenggunaSekarang(Integer penggunaSekarang) {
+    this.penggunaSekarang = penggunaSekarang;
+  }
 }
 
 class Admin extends Pengguna {
@@ -322,13 +400,19 @@ class Admin extends Pengguna {
       return;
     }
     for (int i = 0; i < pinjaman.size(); i++) {
-      System.out.println("Pengajuan " + (i + 1));
-      System.out.println("Jumlah Pinjaman: " + pinjaman.get(i).getJumlahPinjaman());
-      System.out.println("Jangka Waktu Pinjaman: " + pinjaman.get(i).getJangkaWaktuPinjaman() + " bulan");
-      System.out.println("Bunga Pinjaman: " + pinjaman.get(i).getBungaPinjaman() + "%");
-      System.out.println("Status Pinjaman: " + pinjaman.get(i).getStatuspinjaman());
-      System.out.println("Nama Peminjam: " + pinjaman.get(i).getNamaPeminjam());
-      System.out.println("-----------------------------");
+      if (pinjaman.get(i).getStatuspinjaman().equals("Pending")) {
+        System.out.println("Pengajuan " + (i + 1));
+        System.out.println("Jumlah Pinjaman: " + pinjaman.get(i).getJumlahPinjaman());
+        System.out.println("Jangka Waktu Pinjaman: " + pinjaman.get(i).getJangkaWaktuPinjaman() + " bulan");
+        System.out.println("Bunga Pinjaman: " + pinjaman.get(i).getBungaPinjaman() + "%");
+        System.out.println("Status Pinjaman: " + pinjaman.get(i).getStatuspinjaman());
+        System.out.println("Nama Peminjam: " + pinjaman.get(i).getNamaPeminjam());
+        System.out.println("-----------------------------");
+      }
+      if (i == pinjaman.size() - 1 && !pinjaman.get(i).getStatuspinjaman().equals("Pending")) {
+        System.out.println("Tidak ada pengajuan pinjaman yang masih pending.");
+      }
+
     }
   }
 
@@ -446,14 +530,22 @@ class Admin extends Pengguna {
       System.out.println("Belum ada riwayat pinjaman.");
       return;
     }
+    boolean AdaIsiNya = false;
     for (int i = 0; i < pinjaman.size(); i++) {
-      System.out.println("Pinjaman " + (i + 1));
-      System.out.println("Jumlah Pinjaman: " + pinjaman.get(i).getJumlahPinjaman());
-      System.out.println("Jangka Waktu Pinjaman: " + pinjaman.get(i).getJangkaWaktuPinjaman() + " bulan");
-      System.out.println("Bunga Pinjaman: " + pinjaman.get(i).getBungaPinjaman() + "%");
-      System.out.println("Status Pinjaman: " + pinjaman.get(i).getStatuspinjaman());
-      System.out.println("Nama Peminjam: " + pinjaman.get(i).getNamaPeminjam());
-      System.out.println("-----------------------------");
+      if (!pinjaman.get(i).getStatuspinjaman().equals("Pending")) {
+        System.out.println("Pinjaman " + (i + 1));
+        System.out.println("Jumlah Pinjaman: " + pinjaman.get(i).getJumlahPinjaman());
+        System.out.println("Jangka Waktu Pinjaman: " + pinjaman.get(i).getJangkaWaktuPinjaman() + " bulan");
+        System.out.println("Bunga Pinjaman: " + pinjaman.get(i).getBungaPinjaman() + "%");
+        System.out.println("Status Pinjaman: " + pinjaman.get(i).getStatuspinjaman());
+        System.out.println("Nama Peminjam: " + pinjaman.get(i).getNamaPeminjam());
+        System.out.println("-----------------------------");
+        AdaIsiNya = true;
+      }
+    }
+    if (AdaIsiNya == false) {
+      System.out.println("Belum ada riwayat pinjaman yang di konfirmasi statusnya.");
+
     }
   }
 }
@@ -508,7 +600,7 @@ class User extends Pengguna {
 
   private Boolean cekDuplikatPengajuan(String namaPeminjam) {
     for (Pinjaman pinjamanItem : pinjaman) {
-      if (pinjamanItem.getNamaPeminjam().equals(namaPeminjam) && pinjamanItem.getStatuspinjaman().equals("Menunggu")) {
+      if (pinjamanItem.getNamaPeminjam().equals(namaPeminjam) && pinjamanItem.getStatuspinjaman().equals("Pending")) {
         return true;
       }
     }
@@ -545,7 +637,8 @@ class User extends Pengguna {
       }
     }
 
-    System.out.println("\n1. 3 bulan, Bunga 10%\n2. 6 bulan, Bunga 15%\n3. 12 bulan, Bunga 20%\n4. 24 bulan, Bunga 25%\n5. 36 bulan, Bunga 30%\n");
+    System.out.println(
+        "\n1. 3 bulan, Bunga 10%\n2. 6 bulan, Bunga 15%\n3. 12 bulan, Bunga 20%\n4. 24 bulan, Bunga 25%\n5. 36 bulan, Bunga 30%\n");
     int pilihanJangkaWaktu = 0;
     while (true) {
       System.out.print("Pilih Jangka Waktu Pinjaman (1-5): ");
@@ -587,7 +680,7 @@ class User extends Pengguna {
       bungaPinjaman = 30.0;
     }
 
-    String statusPinjaman = "Menunggu";
+    String statusPinjaman = "Pending";
     String namaPeminjam = usernames.get(penggunaSekarang - 1);
 
     pinjaman.add(new Pinjaman(jumlahPinjaman, jangkaWaktuPinjaman, bungaPinjaman, statusPinjaman, namaPeminjam));
@@ -597,18 +690,23 @@ class User extends Pengguna {
 
   private void lihatStatusPending() {
     System.out.println("Status Pengajuan Pinjaman");
-    boolean adaPengajuanPending = false;
+    if (pinjaman.isEmpty()) {
+      System.out.println("Belum ada pengajuan pinjaman.");
+      return;
+    }
+    boolean adaPending = false;
     for (Pinjaman pinjamanItem : pinjaman) {
-      if (pinjamanItem.getStatuspinjaman().equals("Menunggu") && pinjamanItem.getNamaPeminjam().equals(usernames.get(penggunaSekarang - 1))) {
-        adaPengajuanPending = true;
+      if (pinjamanItem.getNamaPeminjam().equals(usernames.get(penggunaSekarang - 1))) {
         System.out.println("Jumlah Pinjaman: " + pinjamanItem.getJumlahPinjaman());
         System.out.println("Jangka Waktu Pinjaman: " + pinjamanItem.getJangkaWaktuPinjaman() + " bulan");
         System.out.println("Bunga Pinjaman: " + pinjamanItem.getBungaPinjaman() + "%");
         System.out.println("Status Pinjaman: " + pinjamanItem.getStatuspinjaman());
+        System.out.println("-----------------------------");
+        adaPending = true;
       }
     }
-    if (!adaPengajuanPending) {
-      System.out.println("Belum ada pengajuan pinjaman yang menunggu.");
+    if (adaPending == false) {
+      System.out.println("Tidak ada pengajuan pinjaman yang masih pending.");
     }
   }
 
@@ -619,24 +717,26 @@ class User extends Pengguna {
       return;
     }
     lihatStatusPending();
-    int nominalPengajuan = 0;
-    while (true) {
-      System.out.print("Masukkan nominal pengajuan yang ingin diedit: ");
-      String inputStr = input.nextLine();
-      try {
-        nominalPengajuan = Integer.parseInt(inputStr);
-        if (nominalPengajuan <= 0) {
-          System.out.println("Nominal harus lebih dari 0.");
-          continue;
-        }
-        break;
-      } catch (NumberFormatException e) {
-        System.out.println("Input harus berupa angka.");
-      }
-    }
+    // int nominalPengajuan = 0;
+    // while (true) {
+    // System.out.print("Masukkan nominal pengajuan yang ingin diedit: ");
+    // String inputStr = input.nextLine();
+    // try {
+    // nominalPengajuan = Integer.parseInt(inputStr);
+    // if (nominalPengajuan <= 0) {
+    // System.out.println("Nominal harus lebih dari 0.");
+    // continue;
+    // }
+    // break;
+    // } catch (NumberFormatException e) {
+    // System.out.println("Input harus berupa angka.");
+    // }
+    // }
+    System.out.println();
     boolean found = false;
     for (Pinjaman pinjamanItem : pinjaman) {
-      if (pinjamanItem.getJumlahPinjaman() == nominalPengajuan && pinjamanItem.getStatuspinjaman().equals("Menunggu") && pinjamanItem.getNamaPeminjam().equals(usernames.get(penggunaSekarang - 1))) {
+      if (pinjamanItem.getStatuspinjaman().equals("Pending")
+          && pinjamanItem.getNamaPeminjam().equals(usernames.get(penggunaSekarang - 1))) {
         found = true;
         int jumlahPinjamanBaru = 0;
         while (true) {
@@ -654,7 +754,8 @@ class User extends Pengguna {
           }
         }
 
-        System.out.println("\n1. 3 bulan, Bunga 10%\n2. 6 bulan, Bunga 15%\n3. 12 bulan, Bunga 20%\n4. 24 bulan, Bunga 25%\n5. 36 bulan, Bunga 30%\n");
+        System.out.println(
+            "\n1. 3 bulan, Bunga 10%\n2. 6 bulan, Bunga 15%\n3. 12 bulan, Bunga 20%\n4. 24 bulan, Bunga 25%\n5. 36 bulan, Bunga 30%\n");
         int pilihanJangkaWaktu = 0;
         while (true) {
           System.out.print("Pilih Jangka Waktu Pinjaman (1-5): ");
@@ -704,7 +805,7 @@ class User extends Pengguna {
       }
     }
     if (!found) {
-      System.out.println("Pengajuan dengan nominal tersebut tidak ditemukan atau statusnya bukan Menunggu.");
+      System.out.println("Pengajuan dengan nominal tersebut tidak ditemukan atau statusnya bukan Pending.");
     }
   }
 
@@ -717,7 +818,8 @@ class User extends Pengguna {
     lihatStatusPending();
     boolean found = false;
     for (Pinjaman pinjamanItem : pinjaman) {
-      if (pinjamanItem.getStatuspinjaman().equals("Menunggu") && pinjamanItem.getNamaPeminjam().equals(usernames.get(penggunaSekarang - 1))) {
+      if (pinjamanItem.getStatuspinjaman().equals("Pending")
+          && pinjamanItem.getNamaPeminjam().equals(usernames.get(penggunaSekarang - 1))) {
         found = true;
         pinjaman.remove(pinjamanItem);
         System.out.println("Pembatalan pengajuan berhasil dilakukan.");
